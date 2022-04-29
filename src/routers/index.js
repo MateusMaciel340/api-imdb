@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.send("Testando rota!");
-})
+const routerUsuario = require("./usuario/routerUsuario");
+
+router.use(
+    routerUsuario,
+)
 
 module.exports = router;
