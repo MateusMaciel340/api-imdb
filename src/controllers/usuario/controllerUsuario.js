@@ -31,6 +31,12 @@ module.exports = {
             const { id_usuario } = req.params;
             const { nome_usuario, email_usuario, tipo_usuario } = req.body;
 
+            const verificarUsuario = await modelUsuario.findByPk(id_usuario);
+
+            if(!verificarUsuario){
+                return res.status(400).json("Esse usuário não existe!");
+            }
+
             const atualizacaoUsuario = await modelUsuario.update({
                 nome_usuario, email_usuario, tipo_usuario,
             },{
@@ -47,6 +53,12 @@ module.exports = {
     async remocaoUsuario(req, res){
         try{
             const { id_usuario } = req.params;
+
+            const verificarUsuario = await modelUsuario.findByPk(id_usuario);
+
+            if(!verificarUsuario){
+                return res.status(400).json("Esse usuário não existe!");
+            }
 
             const removerUsuario = await modelUsuario.destroy({
                 where:{
