@@ -4,20 +4,23 @@ const categoria = express.Router();
 // Controllers
 const controllerCategoria = require("../../controllers/conteudo/controllerCategoria");
 
+// Middlewares
+const permissao = require("../../middlewares/permissao");
+
 categoria.get("/categoria",
     controllerCategoria.listarCategoria,
 );
 
 categoria.post("/categoria",
-    controllerCategoria.postagemCategoria,
+    permissao, controllerCategoria.postagemCategoria,
 );
 
 categoria.put("/categoria/:id_categoria", 
-    controllerCategoria.atualizarCategoria,
+    permissao, controllerCategoria.atualizarCategoria,
 );
 
 categoria.delete("/categoria/:id_categoria", 
-    controllerCategoria.remocaoCategoria,
+    permissao, controllerCategoria.remocaoCategoria,
 );
 
 module.exports = categoria;

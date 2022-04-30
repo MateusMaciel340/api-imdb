@@ -5,8 +5,11 @@ const usuario = express.Router();
 const controllerUsuario = require("../../controllers/usuario/controllerUsuario");
 const autenticacaoUsuario = require("../../controllers/usuario/AutenticaoUsuario");
 
+// Middlewares
+const permissao = require("../../middlewares/permissao");
+
 usuario.get("/usuario", 
-    controllerUsuario.listarUsuario,
+    permissao, controllerUsuario.listarUsuario,
 );
 
 usuario.post("/login",
@@ -18,11 +21,11 @@ usuario.post("/usuario",
 );
 
 usuario.put("/usuario/:id_usuario",
-    controllerUsuario.atualizacaoUsuario,
+    permissao, controllerUsuario.atualizacaoUsuario,
 );
 
 usuario.delete("/usuario/:id_usuario", 
-    controllerUsuario.remocaoUsuario,
+    permissao, controllerUsuario.remocaoUsuario,
 );
 
 module.exports = usuario;

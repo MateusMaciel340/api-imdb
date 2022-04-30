@@ -3,7 +3,7 @@ const app = express();
 const router = require("./routers");
 const dotenv = require("dotenv");
 const db = require("./databases");
-const handleError = require("./middlewares/protecao-erros");
+const handleError = require("./middlewares/handleError");
 
 dotenv.config();
 const port = process.env.PORT;
