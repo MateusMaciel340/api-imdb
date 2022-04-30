@@ -2,10 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 const routerUsuario = require("./usuario/routerUsuario");
-const routerCategoria = require("./produto/routerCategoria");
+const routerCategoria = require("./conteudo/routerCategoria");
+const routerConteudo = require("./conteudo/routerConteudo");
 
 router.use(
-    routerUsuario, routerCategoria,
+    routerUsuario, routerCategoria, routerConteudo,
 )
 
 module.exports = router;
