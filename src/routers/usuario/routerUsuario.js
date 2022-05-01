@@ -12,6 +12,10 @@ usuario.get("/usuario",
     permissao, controllerUsuario.listarUsuario,
 );
 
+usuario.get("/usuario/:id_usuario",
+    permissao, controllerUsuario.buscarUsuario,
+);
+
 usuario.get("/logado",
     permissao, controllerUsuario.UsuarioLogado,
 );

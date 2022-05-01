@@ -8,7 +8,11 @@ const controllerConteudo = require("../../controllers/conteudo/controllerConteud
 const permissao = require("../../middlewares/permissao");
 
 conteudo.get("/conteudo",
-    controllerConteudo.listarConteudo,
+    permissao, controllerConteudo.listarConteudo,
+);
+
+conteudo.get("/conteudo/:id_conteudo",
+    permissao, controllerConteudo.buscarConteudo,
 );
 
 conteudo.post("/conteudo",

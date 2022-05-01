@@ -8,7 +8,11 @@ const controllerCategoria = require("../../controllers/conteudo/controllerCatego
 const permissao = require("../../middlewares/permissao");
 
 categoria.get("/categoria",
-    controllerCategoria.listarCategoria,
+    permissao, controllerCategoria.listarCategoria,
+);
+
+categoria.get("/categoria/:id_categoria",
+    permissao, controllerCategoria.buscarCategoria,
 );
 
 categoria.post("/categoria",
