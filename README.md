@@ -16,7 +16,7 @@ Api:
 [Documentação da API](https://peaceful-bonbon-5eafb1.netlify.app/)
 
 Como ter acesso ao banco de dados? 
-[Estrutura do banco de dados]()
+[Estrutura do banco de dados](https://github.com/MateusMaciel340/api-imdb/blob/main/src/databases/sql/modelagem-bd.sql)
 
 ### Dotenv
 
