@@ -36,7 +36,7 @@ module.exports = {
             res.status(201).json(inserirUsuario);
         }catch(error){
             if(error.name === "SequelizeUniqueConstraintError"){
-                res.status(400).json("O email inserido já foi cadastrado!");
+                return res.status(400).json("O email inserido já foi cadastrado!");
             }
             res.status(500).json("Ocorreu algum erro!");
         }
