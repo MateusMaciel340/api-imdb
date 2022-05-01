@@ -12,17 +12,37 @@ module.exports = {
             res.status(500).json("Ocorreu algum erro!");
         }
     },
+    buscarConteudo: async(req, res)=>{
+        try{
+            const { id_conteudo } = req.params;
+            const validarConteudo = await modelConteudo.findByPk(id_conteudo);
+
+            if(!validarConteudo){
+                return res.status(400).json("Esse conteúdo não existe!");
+            }
+
+            const ConteudoSelecionado = await modelConteudo.findAll({
+                where:{
+                    id_conteudo,
+                }
+            })
+
+            res.status(200).json(ConteudoSelecionado);
+        }catch(error){
+            res.status(500).json("Ocorreu algum erro!");
+        }
+    },
     async postagemConteudo(req, res){
         try{
             const {
                 logo_conteudo, titulo_conteudo, descricao_conteudo, lancamento_conteudo,
-                atores_conteudo, tempo_conteudo, classificao_conteudo, categoria_id,
+                atores_conteudo, tempo_conteudo, classificacao_conteudo, categoria_id,
             } = req.body;
 
             if(req.auth.tipo_usuario === 1){
                 const postarConteudo = await modelConteudo.create({
                     logo_conteudo, titulo_conteudo, descricao_conteudo, lancamento_conteudo,
-                    atores_conteudo, tempo_conteudo, classificao_conteudo, categoria_id,
+                    atores_conteudo, tempo_conteudo, classificacao_conteudo, categoria_id,
                 })
 
                 res.status(201).json(postarConteudo);
@@ -43,7 +63,7 @@ module.exports = {
 
             const {
                 logo_conteudo, titulo_conteudo, descricao_conteudo, lancamento_conteudo,
-                atores_conteudo, tempo_conteudo, classificao_conteudo, categoria_id,
+                atores_conteudo, tempo_conteudo, classificacao_conteudo, categoria_id,
             } = req.body;
 
             const validarConteudo = await modelConteudo.findByPk(id_conteudo);
@@ -55,7 +75,7 @@ module.exports = {
             if(req.auth.tipo_usuario === 1){
                 const atualizacaoConteudo = await modelConteudo.update({
                     logo_conteudo, titulo_conteudo, descricao_conteudo, lancamento_conteudo,
-                    atores_conteudo, tempo_conteudo, classificao_conteudo, categoria_id,
+                    atores_conteudo, tempo_conteudo, classificacao_conteudo, categoria_id,
                 },{
                     where:{
                         id_conteudo,

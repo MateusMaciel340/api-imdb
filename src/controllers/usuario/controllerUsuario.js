@@ -15,6 +15,30 @@ module.exports = {
             res.status(500).json("Ocorreu algum erro!" + error);
         }
     },
+    buscarUsuario: async(req, res)=>{
+        try{
+            const { id_usuario } = req.params;
+            const validarUsuario = await modelUsuario.findByPk(id_usuario);
+
+            if(!validarUsuario){
+                return res.status(400).json("Esse usuário não existe!");
+            }
+
+            if(req.auth.tipo_usuario === 1){
+                const usuarioSelecionado = await modelUsuario.findAll({
+                    where:{
+                        id_usuario,
+                    }
+                })
+    
+                res.status(200).json(usuarioSelecionado);
+            }else{
+                res.status(400).json("Os dados solicitados não podem ser compartilhados!");
+            }
+        }catch(error){
+            res.status(500).json("Ocorreu algum erro!");
+        }
+    },
     UsuarioLogado: async(req, res)=>{
         try{
             res.status(200).json([req.auth]);

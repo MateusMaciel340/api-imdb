@@ -9,6 +9,27 @@ module.exports = {
             res.status(500).json("Ocorreu algum erro!");
         }
     },
+    buscarCategoria: async(req, res)=>{
+        try{
+            const { id_categoria } = req.params;
+            const validarCategoria = await modelCategoria.findByPk(id_categoria);
+
+            if(!validarCategoria){
+                return res.status(400).json("Essa categoria não existe!");
+            }
+
+            const CategoriaSelecionada = await modelCategoria.findAll({
+                where:{
+                    id_categoria,
+                }
+            })
+
+            res.status(200).json(CategoriaSelecionada);
+
+        }catch(error){
+            res.status(500).json("Ocorreu algum erro!");
+        }
+    },
     async postagemCategoria(req, res){
         try{
             const {
