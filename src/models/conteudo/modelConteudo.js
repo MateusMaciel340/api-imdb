@@ -17,6 +17,18 @@ module.exports = db.define("tb_conteudo",{
     descricao_conteudo:{
         type: DataTypes.TEXT, field: "descricao_conteudo",
     },
+    lancamento_conteudo:{
+        type: DataTypes.STRING, field: "lancamento_conteudo",
+    },
+    atores_conteudo:{
+        type: DataTypes.TEXT, field: "atores_conteudo",
+    },
+    tempo_conteudo:{
+        type: DataTypes.STRING, field: "tempo_conteudo",
+    },
+    classificacao_conteudo:{
+        type: DataTypes.STRING, field: "classificacao_conteudo",
+    },
     categoria_id:{
         type: DataTypes.INTEGER, field: "categoria_id",
         references:{

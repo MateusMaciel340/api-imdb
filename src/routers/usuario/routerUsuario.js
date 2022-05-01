@@ -12,6 +12,10 @@ usuario.get("/usuario",
     permissao, controllerUsuario.listarUsuario,
 );
 
+usuario.get("/logado",
+    permissao, controllerUsuario.UsuarioLogado,
+);
+
 usuario.post("/login",
     autenticacaoUsuario.autenticao_login,
 );

@@ -1,7 +1,8 @@
 const db = require("../../databases");
 const { DataTypes } = require("sequelize");
 
-const { modelUsuario, modelConteudo } = require("../");
+const modelUsuario = require("../usuario/modelUsuario");
+const modelConteudo = require("../conteudo/modelConteudo");
 
 module.exports = db.define("tb_favorito",{
     id_favorito:{
