@@ -15,11 +15,15 @@ module.exports = {
                 logo_categoria, titulo_categoria, descricao_categoria,
             } = req.body;
 
-            const postarCategoria = await modelCategoria.create({
-                logo_categoria, titulo_categoria, descricao_categoria,
-            });
-
-            res.status(201).json(postarCategoria);
+            if(req.auth.tipo_usuario === 1){
+                const postarCategoria = await modelCategoria.create({
+                    logo_categoria, titulo_categoria, descricao_categoria,
+                });
+    
+                res.status(201).json(postarCategoria);
+            }else{
+                res.status(400).json("Você não tem funcionalidades de administrador!");
+            }
         }catch(error){
             res.status(500).json("Ocorreu algum erro!");
         }
@@ -37,15 +41,19 @@ module.exports = {
                 return res.status(400).json("Essa categoria não existe!");
             }
 
-            const atualizacaoCategoria = await modelCategoria.update({
-                logo_categoria, titulo_categoria, descricao_categoria,
-            },{
-                where:{
-                    id_categoria,
-                }
-            })
+            if(req.auth.tipo_usuario === 1){
+                const atualizacaoCategoria = await modelCategoria.update({
+                    logo_categoria, titulo_categoria, descricao_categoria,
+                },{
+                    where:{
+                        id_categoria,
+                    }
+                })
 
-            res.status(200).json(`A categoria ${titulo_categoria} foi atualizada com sucesso!`);
+                res.status(200).json(`A categoria ${titulo_categoria} foi atualizada com sucesso!`);
+            }else{
+                res.status(400).json("Você não tem funcionalidades de administrador!");
+            }
         }catch(error){
             res.status(500).json("Ocorreu algum erro!");
         }
@@ -60,13 +68,18 @@ module.exports = {
                 return res.status(400).json("Essa categoria não existe!");
             }
 
-            const removerCategoria = await modelCategoria.destroy({
-                where:{
-                    id_categoria,
-                }
-            })
+            if(req.auth.tipo_usuario === 1){
+                const removerCategoria = await modelCategoria.destroy({
+                    where:{
+                        id_categoria,
+                    }
+                })
 
-            res.status(200).json("A categoria foi removida com sucesso!");
+                res.status(200).json("A categoria foi removida com sucesso!");
+            }else{
+                res.status(400).json("Você não tem funcionalidades de administrador!");
+            }
+
         }catch(error){
             res.status(500).json("Ocorreu algum erro!");
         }

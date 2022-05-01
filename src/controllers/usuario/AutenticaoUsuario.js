@@ -22,6 +22,7 @@ module.exports = {
                 id_usuario: autenticacao.id_usuario,
                 nome_usuario: autenticacao.nome_usuario,
                 email_usuario: autenticacao.email_usuario,
+                tipo_usuario: autenticacao.tipo_usuario,
                 userType: "user",
             }, secret.key);
 

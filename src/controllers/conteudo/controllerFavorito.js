@@ -1,4 +1,7 @@
-const { modelConteudo, modelUsuario, modelFavorito } = require("../../models");
+const { modelFavorito } = require("../../models");
+
+const modelUsuario = require("../../models/usuario/modelUsuario");
+const modelConteudo = require("../../models/conteudo/modelConteudo");
 
 module.exports = {
     listarMeusFavoritos: async(req, res)=>{

@@ -18,11 +18,15 @@ module.exports = {
                 logo_conteudo, titulo_conteudo, descricao_conteudo, categoria_id,
             } = req.body;
 
-            const postarConteudo = await modelConteudo.create({
-                logo_conteudo, titulo_conteudo, descricao_conteudo, categoria_id,
-            })
+            if(req.auth.tipo_usuario === 1){
+                const postarConteudo = await modelConteudo.create({
+                    logo_conteudo, titulo_conteudo, descricao_conteudo, categoria_id,
+                })
 
-            res.status(201).json(postarConteudo);
+                res.status(201).json(postarConteudo);
+            }else{
+                res.status(400).json("Você não tem funcionalidades de administrador!");
+            }
         }catch(error){
             res.status(500).json("Ocorreu algum erro!");
         }
@@ -41,15 +45,19 @@ module.exports = {
                 return res.status(400).json("Esse conteúdo não existe!");
             }
 
-            const atualizacaoConteudo = await modelConteudo.update({
-                titulo_conteudo, descricao_conteudo, categoria_id,
-            },{
-                where:{
-                    id_conteudo,
-                }
-            })
-
-            res.status(200).json(`O conteúdo ${titulo_conteudo} foi atualizado com sucesso!`);
+            if(req.auth.tipo_usuario === 1){
+                const atualizacaoConteudo = await modelConteudo.update({
+                    titulo_conteudo, descricao_conteudo, categoria_id,
+                },{
+                    where:{
+                        id_conteudo,
+                    }
+                })
+    
+                res.status(200).json(`O conteúdo ${titulo_conteudo} foi atualizado com sucesso!`);
+            }else{
+                res.status(400).json("Você não tem funcionalides de administrador!");
+            }
         }catch(error){
             res.status(500).json("Ocorreu algum erro!");
         }
@@ -64,13 +72,17 @@ module.exports = {
                 return res.status(400).json("Esse conteúdo não existe!");
             }
 
-            const removerConteudo = await modelConteudo.destroy({
-                where:{
-                    id_conteudo,
-                }
-            })
-
-            res.status(200).json("O conteúdo foi removido com sucesso!");
+            if(req.auth.tipo_usuario === 1){
+                const removerConteudo = await modelConteudo.destroy({
+                    where:{
+                        id_conteudo,
+                    }
+                })
+    
+                res.status(200).json("O conteúdo foi removido com sucesso!");
+            }else{
+                res.status(400).json("Você não tem funcionalidades de administrador!");
+            }
         }catch(error){
             res.status(500).json("Ocorreu algum erro!");
         }

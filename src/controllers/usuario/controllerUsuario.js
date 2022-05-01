@@ -4,8 +4,20 @@ const bcrypt = require("bcryptjs");
 module.exports = {
     listarUsuario: async(req, res)=>{
         try{
-            const listagemUsuario = await modelUsuario.findAll();
-            res.status(200).json(listagemUsuario);
+            if(req.auth.tipo_usuario === 1){
+                const listagemUsuario = await modelUsuario.findAll();
+
+                res.status(200).json(listagemUsuario);
+            }else{
+                res.status(400).json("Os dados solicitados não podem ser compartilhados!");
+            }
+        }catch(error){
+            res.status(500).json("Ocorreu algum erro!" + error);
+        }
+    },
+    UsuarioLogado: async(req, res)=>{
+        try{
+            res.status(200).json([req.auth]);
         }catch(error){
             res.status(500).json("Ocorreu algum erro!");
         }
@@ -45,7 +57,7 @@ module.exports = {
                 }
             });
 
-            res.status(200).json(`O usuário ${nome_usuario} foi atualizado com sucesso!`);
+            res.status(200).json(`O usuário foi atualizado com sucesso!`);
         }catch(error){
             res.status(500).json("Ocorreu algum erro!");
         }
