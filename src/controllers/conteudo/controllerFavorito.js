@@ -31,7 +31,11 @@ module.exports = {
 
             res.status(201).json(inserirAosFavoritos);
         }catch(error){
-            res.status(500).json("Ocorreu algum erro!" + error);
+            if(error.name == "SequelizeForeignKeyConstraintError"){
+                return res.status(500).json("Algum dado foi informado incorretamente!");
+            }
+
+            res.status(500).json("Ocorreu algum erro!");
         }
     },
     async removerDosMeusFavoritos(req, res){
@@ -50,7 +54,7 @@ module.exports = {
                 }
             })
 
-            res.status(200).json("Conteúdo removido com sucesso!");
+            res.status(200).json("Conteúdo removido dos favoritados com sucesso!");
         }catch(error){
             res.status(500).json("Ocorreu algum erro!");
         }

@@ -15,12 +15,14 @@ module.exports = {
     async postagemConteudo(req, res){
         try{
             const {
-                logo_conteudo, titulo_conteudo, descricao_conteudo, categoria_id,
+                logo_conteudo, titulo_conteudo, descricao_conteudo, lancamento_conteudo,
+                atores_conteudo, tempo_conteudo, classificao_conteudo, categoria_id,
             } = req.body;
 
             if(req.auth.tipo_usuario === 1){
                 const postarConteudo = await modelConteudo.create({
-                    logo_conteudo, titulo_conteudo, descricao_conteudo, categoria_id,
+                    logo_conteudo, titulo_conteudo, descricao_conteudo, lancamento_conteudo,
+                    atores_conteudo, tempo_conteudo, classificao_conteudo, categoria_id,
                 })
 
                 res.status(201).json(postarConteudo);
@@ -28,6 +30,10 @@ module.exports = {
                 res.status(400).json("Você não tem funcionalidades de administrador!");
             }
         }catch(error){
+            if(error.name == "SequelizeForeignKeyConstraintError"){
+                return res.status(500).json("Algum dado foi informado incorretamente!");
+            }
+
             res.status(500).json("Ocorreu algum erro!");
         }
     },
@@ -36,7 +42,8 @@ module.exports = {
             const { id_conteudo } = req.params;
 
             const {
-                logo_conteudo, titulo_conteudo, descricao_conteudo, categoria_id,
+                logo_conteudo, titulo_conteudo, descricao_conteudo, lancamento_conteudo,
+                atores_conteudo, tempo_conteudo, classificao_conteudo, categoria_id,
             } = req.body;
 
             const validarConteudo = await modelConteudo.findByPk(id_conteudo);
@@ -47,7 +54,8 @@ module.exports = {
 
             if(req.auth.tipo_usuario === 1){
                 const atualizacaoConteudo = await modelConteudo.update({
-                    titulo_conteudo, descricao_conteudo, categoria_id,
+                    logo_conteudo, titulo_conteudo, descricao_conteudo, lancamento_conteudo,
+                    atores_conteudo, tempo_conteudo, classificao_conteudo, categoria_id,
                 },{
                     where:{
                         id_conteudo,
@@ -59,6 +67,10 @@ module.exports = {
                 res.status(400).json("Você não tem funcionalides de administrador!");
             }
         }catch(error){
+            if(error.name == "SequelizeForeignKeyConstraintError"){
+                return res.status(500).json("Algum dado foi informado incorretamente!");
+            }
+
             res.status(500).json("Ocorreu algum erro!");
         }
     },

@@ -35,6 +35,9 @@ module.exports = {
 
             res.status(201).json(inserirUsuario);
         }catch(error){
+            if(error.name === "SequelizeUniqueConstraintError"){
+                res.status(400).json("O email inserido já foi cadastrado!");
+            }
             res.status(500).json("Ocorreu algum erro!");
         }
     },
@@ -49,16 +52,23 @@ module.exports = {
                 return res.status(400).json("Esse usuário não existe!");
             }
 
-            const atualizacaoUsuario = await modelUsuario.update({
-                nome_usuario, email_usuario, tipo_usuario,
-            },{
-                where:{
-                    id_usuario,
-                }
-            });
+            if(id_usuario == req.auth.id_usuario){
+                const atualizacaoUsuario = await modelUsuario.update({
+                    nome_usuario, email_usuario, tipo_usuario,
+                },{
+                    where:{
+                        id_usuario,
+                    }
+                });
 
-            res.status(200).json(`O usuário foi atualizado com sucesso!`);
+                res.status(200).json(`O usuário foi atualizado com sucesso!`);
+            }else{
+                res.status(400).json("Esse usuário não pertence a você!");
+            }
         }catch(error){
+            if(error.name === "SequelizeUniqueConstraintError"){
+                res.status(400).json("O email inserido já foi cadastrado!");
+            }
             res.status(500).json("Ocorreu algum erro!");
         }
     },
@@ -72,15 +82,19 @@ module.exports = {
                 return res.status(400).json("Esse usuário não existe!");
             }
 
-            const removerUsuario = await modelUsuario.destroy({
-                where:{
-                    id_usuario,
-                }
-            })
-
-            res.status(200).json("Usuário removido com sucesso!");
+            if(id_usuario == req.auth.id_usuario){
+                const removerUsuario = await modelUsuario.destroy({
+                    where:{
+                        id_usuario,
+                    }
+                })
+    
+                res.status(200).json("Usuário removido com sucesso!");
+            }else{
+                res.status(400).json("Esse usuário não pertence a você!");
+            }
         }catch(error){
-            res.status(500).json("Ocorreu algum erro!");
+            res.status(500).json("Ocorreu algum erro!" + error);
         }
     },
 }
